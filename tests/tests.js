@@ -30,4 +30,12 @@ describe('ndjson-apply', () => {
       { a: 789, b: 123, total: 1012 }
     ])
   })
+
+  it('should filter-out lines returning empty', async () => {
+    const { stdout, stderr } = await exec('./cli.js ./tests/even_only_transformer.js < ./tests/sample.ndjson')
+    const data = stdout.trim().split('\n').map(line => JSON.parse(line))
+    data.should.deepEqual([
+      { a: 789, b: 123, total: 912 }
+    ])
+  })
 })
