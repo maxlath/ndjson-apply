@@ -4,8 +4,9 @@
   "description": "apply a function from a file to a stream of newline-delimited JSON",
   "main": "cli.js",
   "bin": {
-    "ndjson-apply": "./cli.js"
+    "ndjson-apply": "./bin/ndjson-apply"
   },
+  "files": [ "bin", "lib" ],
   "scripts": {
     "test": "mocha ./tests/tests.js"
   },

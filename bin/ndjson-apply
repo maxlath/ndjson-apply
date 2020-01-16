@@ -11,13 +11,12 @@ if (typeof transformFn !== 'function') throw new Error(`${resolvedPath} doesn't 
 
 const split = require('split')
 const through = require('through')
-const { isAsyncFunction } = require('./lib/utils')
-const lineTransformers = require('./lib/line_transformers')
+const { isAsyncFunction } = require('../lib/utils')
+const lineTransformers = require('../lib/line_transformers')
 
 const transformer = isAsyncFunction(transformFn) ? lineTransformers.async : lineTransformers.sync
 
 process.stdin
 .pipe(split())
 .pipe(through(transformer(transformFn)))
-// .on('data', transformer(transformFn))
 .pipe(process.stdout)
