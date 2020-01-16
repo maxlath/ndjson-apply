@@ -1,0 +1,26 @@
+{
+  "name": "ndjson-apply",
+  "version": "1.0.0",
+  "description": "apply a function from a file to a stream of newline-delimited JSON",
+  "main": "cli.js",
+  "bin": {
+    "ndjson-apply": "./cli.js"
+  },
+  "scripts": {
+    "test": "mocha ./tests/tests.js"
+  },
+  "keywords": [
+    "ndjson",
+    "jsonl",
+    "ldjson",
+    "apply",
+    "transform",
+    "function"
+  ],
+  "author": "maxlath",
+  "license": "MIT",
+  "dependencies": {
+    "split": "^1.0.1",
+    "through": "^2.3.8"
+  }
+}
