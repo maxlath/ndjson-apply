@@ -1,12 +1,15 @@
 {
   "name": "ndjson-apply",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "apply a function from a file to a stream of newline-delimited JSON",
   "main": "cli.js",
   "bin": {
     "ndjson-apply": "./bin/ndjson-apply"
   },
-  "files": [ "bin", "lib" ],
+  "files": [
+    "bin",
+    "lib"
+  ],
   "scripts": {
     "test": "mocha ./tests/tests.js"
   },
