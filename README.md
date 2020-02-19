@@ -24,5 +24,21 @@ module.exports = doc => {
 }
 ```
 
+That function can also be async:
+```js
+const getSomeExtraData = require('./path/to/get_some_extra_data')
+
+// some_async_transform_fn.js
+module.exports = async doc => {
+  doc.total = doc.a + doc.b
+  if (doc.total % 2 === 0) {
+    doc.extraData = await getSomeExtraData(doc)
+    return doc
+  } else {
+    // returning null or undefined drops the entry
+  }
+}
+```
+
 ## See also
 * [ndjson-cli#map](https://github.com/mbostock/ndjson-cli#map)
