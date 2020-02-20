@@ -14,7 +14,7 @@ describe('ndjson-apply', () => {
   })
 
   it('should accept a sync function', async () => {
-    const { stdout, stderr } = await exec('./bin/ndjson-apply ./tests/sync_transformer.js < ./tests/sample.ndjson')
+    const { stdout, stderr } = await exec('./bin/ndjson-apply ./tests/assets/sync_transformer.js < ./tests/assets/sample.ndjson')
     const data = stdout.trim().split('\n').map(line => JSON.parse(line))
     data.should.deepEqual([
       { a: 123, b: 456, total: 579 },
@@ -23,7 +23,7 @@ describe('ndjson-apply', () => {
   })
 
   it('should accept an async function', async () => {
-    const { stdout, stderr } = await exec('./bin/ndjson-apply ./tests/async_transformer.js < ./tests/sample.ndjson')
+    const { stdout, stderr } = await exec('./bin/ndjson-apply ./tests/assets/async_transformer.js < ./tests/assets/sample.ndjson')
     const data = stdout.trim().split('\n').map(line => JSON.parse(line))
     data.should.deepEqual([
       { a: 123, b: 456, total: 679 },
@@ -32,7 +32,7 @@ describe('ndjson-apply', () => {
   })
 
   it('should filter-out lines returning empty', async () => {
-    const { stdout, stderr } = await exec('./bin/ndjson-apply ./tests/even_only_transformer.js < ./tests/sample.ndjson')
+    const { stdout, stderr } = await exec('./bin/ndjson-apply ./tests/assets/even_only_transformer.js < ./tests/assets/sample.ndjson')
     const data = stdout.trim().split('\n').map(line => JSON.parse(line))
     data.should.deepEqual([
       { a: 789, b: 123, total: 912 }
