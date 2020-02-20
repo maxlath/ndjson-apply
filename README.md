@@ -6,6 +6,8 @@ npm i -g ndjson-apply
 ```
 
 ## How To
+
+### Basic
 ```sh
 cat some_data.ndjson | ndjson-apply some_transform_fn.js > some_data_transformed.ndjson
 # Which can also be written
@@ -24,6 +26,7 @@ module.exports = doc => {
 }
 ```
 
+### Async
 That function can also be async:
 ```js
 const getSomeExtraData = require('./path/to/get_some_extra_data')
