@@ -28,5 +28,9 @@
     "split": "^1.0.1",
     "through": "^2.3.8",
     "tiny-chalk": "^2.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^7.0.1",
+    "should": "^13.2.3"
   }
 }
