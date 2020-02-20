@@ -1,7 +1,8 @@
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const getRemoteValue = async () => {
-  await wait(1)
+  const ms = Math.trunc(Math.random() * 100)
+  await wait(ms)
   return 100
 }
 
