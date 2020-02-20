@@ -3,7 +3,7 @@ const { promisify } = require('util')
 const exec = promisify(require('child_process').exec)
 const shouldntGetHere = () => { throw new Error("shouldn't get here") }
 
-describe('ndjson-apply', () => {
+describe('apply', () => {
   it('should reject an invalid function module', async () => {
     try {
       const { stdout, stderr } = await exec('./bin/ndjson-apply')

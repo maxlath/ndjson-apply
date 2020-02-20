@@ -43,5 +43,14 @@ module.exports = async doc => {
 }
 ```
 
+### Diff mode
+As a way to preview the results of your transformation, you can use the diff mode
+```sh
+cat some_data.ndjson | ndjson-apply some_transform_fn.js --diff
+```
+which will display a colored diff of each line before and after transformation.
+
+For more readability, each line diff output is indented and on several lines.
+
 ## See also
 * [ndjson-cli#map](https://github.com/mbostock/ndjson-cli#map)
