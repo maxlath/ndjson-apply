@@ -11,7 +11,8 @@
     "lib"
   ],
   "scripts": {
-    "test": "mocha ./tests/*.js"
+    "test": "mocha ./tests/*.js",
+    "prepublish": "npm test"
   },
   "keywords": [
     "ndjson",
