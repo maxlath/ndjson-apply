@@ -4,7 +4,7 @@
   "description": "apply a function from a file to a stream of newline-delimited JSON",
   "main": "cli.js",
   "bin": {
-    "ndjson-apply": "./bin/ndjson-apply"
+    "ndjson-apply": "bin/ndjson-apply"
   },
   "files": [
     "bin",
@@ -33,5 +33,17 @@
   "devDependencies": {
     "mocha": "^7.0.1",
     "should": "^13.2.3"
-  }
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxlath/ndjson-apply.git"
+  },
+  "bugs": {
+    "url": "https://github.com/maxlath/ndjson-apply/issues"
+  },
+  "homepage": "https://github.com/maxlath/ndjson-apply#readme"
 }
