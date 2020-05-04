@@ -19,8 +19,11 @@
     "jsonl",
     "ldjson",
     "apply",
+    "map",
     "transform",
-    "function"
+    "function",
+    "diff",
+    "CLI"
   ],
   "author": "maxlath",
   "license": "MIT",
