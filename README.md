@@ -1,4 +1,10 @@
 # ndjson-apply
+Apply a JS function to a stream of newline-delimited JSON.
+
+Features:
+* take the JS function to apply from a file
+* the function may return async results
+* preview the transformation results with the `--diff` option
 
 ## Install
 ```sh
