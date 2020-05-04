@@ -6,6 +6,10 @@ Features:
 * the function may return async results
 * preview the transformation results with the `--diff` option
 
+[![NPM](https://nodei.co/npm/ndjson-apply.png?stars&downloads&downloadRank)](https://npmjs.com/package/ndjson-apply/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Node](https://img.shields.io/badge/node-%3E=%20v7.6.0-brightgreen.svg)](http://nodejs.org)
+
 ## Install
 ```sh
 npm i -g ndjson-apply
