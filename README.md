@@ -53,4 +53,5 @@ which will display a colored diff of each line before and after transformation.
 For more readability, each line diff output is indented and on several lines.
 
 ## See also
+* [jq](https://stedolan.github.io/jq/) is great to work with NDJSON: `cat entries_array.json | jq '.[]' -cr > entries.ndjson`
 * [ndjson-cli#map](https://github.com/mbostock/ndjson-cli#map)
