@@ -62,6 +62,12 @@ which will display a colored diff of each line before and after transformation.
 
 For more readability, each line diff output is indented and on several lines.
 
+### Filter mode
+Use the js function only to filter lines: lines returning `true` will be let through. No transformation will be applied.
+```sh
+cat some_data.ndjson | ndjson-apply some_transform_fn.js --filter
+```
+
 ## See also
 * [jq](https://stedolan.github.io/jq/) is great to work with NDJSON: `cat entries_array.json | jq '.[]' -cr > entries.ndjson`
 * [ndjson-cli#map](https://github.com/mbostock/ndjson-cli#map)

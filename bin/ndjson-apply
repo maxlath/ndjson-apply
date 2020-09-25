@@ -2,6 +2,7 @@
 const path = require('path')
 let args = process.argv.slice(2)
 const showDiff = args.includes('--diff')
+const filterOnly = args.includes('--filter')
 args = args.filter(arg => arg[0] !== '-')
 const [ fnModulePath ] = args
 
@@ -21,5 +22,5 @@ const transformer = isAsyncFunction(transformFn) ? lineTransformers.async : line
 
 process.stdin
 .pipe(split())
-.pipe(through(transformer(transformFn, showDiff)))
+.pipe(through(transformer(transformFn, showDiff, filterOnly)))
 .pipe(process.stdout)
