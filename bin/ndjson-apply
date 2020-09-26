@@ -23,6 +23,7 @@ const split = require('split')
 const through = require('through')
 const { isAsyncFunction } = require('../lib/utils')
 const lineTransformers = require('../lib/line_transformers')
+const handleErrors = require('../lib/handle_errors')
 
 const transformer = isAsyncFunction(transformFn) ? lineTransformers.async : lineTransformers.sync
 
@@ -30,3 +31,4 @@ process.stdin
 .pipe(split())
 .pipe(through(transformer(transformFn, showDiff, filterOnly)))
 .pipe(process.stdout)
+.on('error', handleErrors)
