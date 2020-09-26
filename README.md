@@ -68,6 +68,28 @@ Use the js function only to filter lines: lines returning `true` will be let thr
 cat some_data.ndjson | ndjson-apply some_transform_fn.js --filter
 ```
 
+### Use sub-function
+Given a `function_collection.js` file like:
+```js
+// function_collection.js
+module.exports = {
+  foo: (obj) => {
+    obj.timestamp = Date.now()
+    return obj
+  },
+  bar: (obj) => {
+    obj.count += obj.count
+    return obj
+  }
+}
+```
+
+You can use those subfunction by passing there key as an additional argument
+```sh
+cat some_data.ndjson | ndjson-apply ./function_collection.js foo
+cat some_data.ndjson | ndjson-apply ./function_collection.js bar
+```
+
 ## See also
 * [jq](https://stedolan.github.io/jq/) is great to work with NDJSON: `cat entries_array.json | jq '.[]' -cr > entries.ndjson`
 * [ndjson-cli#map](https://github.com/mbostock/ndjson-cli#map)

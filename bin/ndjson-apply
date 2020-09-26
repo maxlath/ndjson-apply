@@ -4,12 +4,18 @@ let args = process.argv.slice(2)
 const showDiff = args.includes('--diff')
 const filterOnly = args.includes('--filter')
 args = args.filter(arg => arg[0] !== '-')
-const [ fnModulePath ] = args
+const [ fnModulePath, key ] = args
 
 if (!fnModulePath) throw new Error('missing function module path')
 
 const resolvedPath = path.resolve(fnModulePath)
-const transformFn = require(resolvedPath)
+let transformFn = require(resolvedPath)
+
+if (key) {
+  if (transformFn[key] == null) throw new Error(`"${key}" not found on ${fnModulePath} exported object`)
+  if (typeof transformFn[key] !== 'function') throw new Error(`${fnModulePath}#${key} isnt a function: ${typeof transformFn[key]}`)
+  transformFn = transformFn[key]
+}
 
 if (typeof transformFn !== 'function') throw new Error(`${resolvedPath} doesn't export a function`)
 
