@@ -10,6 +10,25 @@ Features:
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node](https://img.shields.io/badge/node-%3E=%20v7.6.0-brightgreen.svg)](http://nodejs.org)
 
+
+## Summary
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Install](#install)
+- [How To](#how-to)
+  - [Basic](#basic)
+  - [Async](#async)
+  - [Diff mode](#diff-mode)
+  - [Filter mode](#filter-mode)
+  - [Use sub-function](#use-sub-function)
+- [See also](#see-also)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
 ## Install
 ```sh
 npm i -g ndjson-apply
