@@ -38,4 +38,49 @@ describe('apply', () => {
       { a: 789, b: 123, total: 912 }
     ])
   })
+
+  it('should use additional argument to find sub function', async () => {
+    const { stdout } = await exec('./bin/ndjson-apply ./tests/assets/function_collection.js multiply < ./tests/assets/sample.ndjson')
+    const data = stdout.trim().split('\n').map(line => JSON.parse(line))
+    data.should.deepEqual([
+      { a: 123, b: 456, total: 56088 },
+      { a: 789, b: 123, total: 97047 },
+    ])
+  })
+
+  it('should pass remaining arguments to function', async () => {
+    const { stdout } = await exec('./bin/ndjson-apply ./tests/assets/sync_transformer.js 100 < ./tests/assets/sample.ndjson')
+    const data = stdout.trim().split('\n').map(line => JSON.parse(line))
+    data.should.deepEqual([
+      { a: 123, b: 456, total: 679 },
+      { a: 789, b: 123, total: 1012 }
+    ])
+  })
+
+  it('should pass remaining arguments to sub function', async () => {
+    const { stdout } = await exec('./bin/ndjson-apply ./tests/assets/function_collection.js multiply 10 < ./tests/assets/sample.ndjson')
+    const data = stdout.trim().split('\n').map(line => JSON.parse(line))
+    data.should.deepEqual([
+      { a: 123, b: 456, total: 560880 },
+      { a: 789, b: 123, total: 970470 },
+    ])
+  })
+
+  it('should pass remaining arguments to async function', async () => {
+    const { stdout } = await exec('./bin/ndjson-apply ./tests/assets/async_transformer.js 20 < ./tests/assets/sample.ndjson')
+    const data = stdout.trim().split('\n').map(line => JSON.parse(line))
+    data.should.deepEqual([
+      { a: 123, b: 456, total: 699 },
+      { a: 789, b: 123, total: 1032 }
+    ])
+  })
+
+  it('should pass remaining arguments to async sub function', async () => {
+    const { stdout } = await exec('./bin/ndjson-apply ./tests/assets/function_collection.js multiplyAsync 1000 < ./tests/assets/sample.ndjson')
+    const data = stdout.trim().split('\n').map(line => JSON.parse(line))
+    data.should.deepEqual([
+      { a: 123, b: 456, total: 56088000 },
+      { a: 789, b: 123, total: 97047000 },
+    ])
+  })
 })

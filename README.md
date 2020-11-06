@@ -24,6 +24,7 @@ Features:
   - [Diff mode](#diff-mode)
   - [Filter mode](#filter-mode)
   - [Use sub-function](#use-sub-function)
+  - [Pass additional arguments](#pass-additional-arguments)
 - [See also](#see-also)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -103,10 +104,19 @@ module.exports = {
 }
 ```
 
-You can use those subfunction by passing there key as an additional argument
+You can use those subfunction by passing their key as an additional argument
 ```sh
 cat some_data.ndjson | ndjson-apply ./function_collection.js foo
 cat some_data.ndjson | ndjson-apply ./function_collection.js bar
+```
+
+### Pass additional arguments
+Any remaining argument will be passed to the function
+```sh
+# Pass '123' as argument to the exported function
+cat some_data.ndjson | ndjson-apply ./function.js 123
+# Pass '123' as argument to the exported sub-function foo
+cat some_data.ndjson | ndjson-apply ./function_collection.js foo 123
 ```
 
 ## See also
