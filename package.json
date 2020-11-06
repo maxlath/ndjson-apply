@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "test": "mocha ./tests/*.js",
-    "prepublish": "npm test"
+    "prepublish": "npm test",
+    "update-toc": "./scripts/update_toc.sh"
   },
   "keywords": [
     "ndjson",
