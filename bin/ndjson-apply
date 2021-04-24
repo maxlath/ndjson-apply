@@ -4,10 +4,22 @@ const { program } = require('commander')
 const { version } = require('../package.json')
 
 program
+.description('Apply a JS function to a stream of newline-delimited JSON.')
 .arguments('<js-function-module> [function-arguments...]')
 .option('-d, --diff', 'Preview the changes between the input and the transformation output')
 .option('-f, --filter', 'Use the js function only to filter lines: lines returning `true` will be let through. No transformation will be applied.')
 .version(version)
+.addHelpText('after', `
+Examples:
+  # transform
+  cat some_data.ndjson | ndjson-apply some_transform_function.js > some_data_transformed.ndjson
+
+  # preview transformation changes
+  cat some_data.ndjson | ndjson-apply some_transform_function.js --diff
+
+  # filter lines
+  cat some_data.ndjson | ndjson-apply some_filter_function.js --filter
+`)
 
 program.parse(process.argv)
 

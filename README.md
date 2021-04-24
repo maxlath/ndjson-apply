@@ -39,13 +39,13 @@ npm i -g ndjson-apply
 
 ### Basic
 ```sh
-cat some_data.ndjson | ndjson-apply some_transform_fn.js > some_data_transformed.ndjson
+cat some_data.ndjson | ndjson-apply some_transform_function.js > some_data_transformed.ndjson
 # Which can also be written
-ndjson-apply some_transform_fn.js < cat some_data.ndjson > some_data_transformed.ndjson
+ndjson-apply some_transform_function.js < cat some_data.ndjson > some_data_transformed.ndjson
 ```
-where `some_transform_fn.js` just needs to export a JS function
+where `some_transform_function.js` just needs to export a JS function
 ```js
-// some_transform_fn.js
+// some_transform_function.js
 module.exports = doc => {
   doc.total = doc.a + doc.b
   if (doc.total % 2 === 0) {
@@ -61,7 +61,7 @@ That function can also be async:
 ```js
 const getSomeExtraData = require('./path/to/get_some_extra_data')
 
-// some_async_transform_fn.js
+// some_async_transform_function.js
 module.exports = async doc => {
   doc.total = doc.a + doc.b
   if (doc.total % 2 === 0) {
@@ -76,7 +76,7 @@ module.exports = async doc => {
 ### Diff mode
 As a way to preview the results of your transformation, you can use the diff mode
 ```sh
-cat some_data.ndjson | ndjson-apply some_transform_fn.js --diff
+cat some_data.ndjson | ndjson-apply some_transform_function.js --diff
 ```
 which will display a colored diff of each line before and after transformation.
 
@@ -85,7 +85,7 @@ For more readability, each line diff output is indented and on several lines.
 ### Filter mode
 Use the js function only to filter lines: lines returning `true` will be let through. No transformation will be applied.
 ```sh
-cat some_data.ndjson | ndjson-apply some_transform_fn.js --filter
+cat some_data.ndjson | ndjson-apply some_transform_function.js --filter
 ```
 
 ### Use sub-function
