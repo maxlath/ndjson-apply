@@ -27,7 +27,10 @@ const [ fnModulePath, ...additionalArgs ] = program.args
 
 const { diff: showDiff, filter: filterOnly } = program.opts()
 
-if (!fnModulePath) throw new Error('missing function module path')
+if (!fnModulePath) {
+  if (process.stdin.isTTY) program.help()
+  else throw new Error('missing function module path')
+}
 
 const resolvedPath = path.resolve(fnModulePath)
 let transformFn = require(resolvedPath)
