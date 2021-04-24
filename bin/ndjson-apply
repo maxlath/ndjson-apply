@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 const path = require('path')
 const { program } = require('commander')
-const { version } = require('../package.json')
+const { version, description } = require('../package.json')
 
 program
-.description('Apply a JS function to a stream of newline-delimited JSON.')
+.description(description)
 .arguments('<js-function-module> [function-arguments...]')
 .option('-d, --diff', 'Preview the changes between the input and the transformation output')
 .option('-f, --filter', 'Use the js function only to filter lines: lines returning `true` will be let through. No transformation will be applied.')
