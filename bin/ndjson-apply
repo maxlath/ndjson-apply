@@ -11,14 +11,40 @@ program
 .version(version)
 .addHelpText('after', `
 Examples:
-  # transform
+  # create a transform function
+  echo '
+  module.exports = function (entry) {
+    entry.total = entry.countA + entry.countB
+    return entry
+  }
+  ' > some_transform_function.js
+
+  # use it to transform ndjson entries
   cat some_data.ndjson | ndjson-apply some_transform_function.js > some_data_transformed.ndjson
 
   # preview transformation changes
   cat some_data.ndjson | ndjson-apply some_transform_function.js --diff
 
-  # filter lines
-  cat some_data.ndjson | ndjson-apply some_filter_function.js --filter
+  # create a filter function
+  echo '
+  module.exports = function (entry) {
+    return entry.total > 5
+  }
+  ' > some_filter_function.js
+
+  # filter entries
+  cat some_data_transformed.ndjson | ndjson-apply some_filter_function.js --filter > some_data_with_total_above_5.ndjson
+
+  # create a transform function that takes extra arguments from the command line
+  echo '
+  module.exports = function (entry, bonus) {
+    entry.total = entry.countA + entry.countB + parseInt(bonus)
+    return entry
+  }
+  ' > some_dynamic_transform_function.js
+
+  cat some_data.ndjson | ndjson-apply some_transform_function.js 500 > some_data_transformed_with_bonus_500.ndjson
+  cat some_data.ndjson | ndjson-apply some_transform_function.js 1000 > some_data_transformed_with_bonus_1000.ndjson
 `)
 
 program.parse(process.argv)
