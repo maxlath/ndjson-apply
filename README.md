@@ -43,10 +43,22 @@ cat some_data.ndjson | ndjson-apply some_transform_function.js > some_data_trans
 # Which can also be written
 ndjson-apply some_transform_function.js < cat some_data.ndjson > some_data_transformed.ndjson
 ```
-where `some_transform_function.js` just needs to export a JS function
+where `some_transform_function.js` just needs to export a JS function. This should work both with the ESM export syntax
 ```js
 // some_transform_function.js
-module.exports = doc => {
+export default function (doc) {
+  doc.total = doc.a + doc.b
+  if (doc.total % 2 === 0) {
+    return doc
+  } else {
+    // returning null or undefined drops the entry
+  }
+}
+```
+or with the CommonJS export syntax
+```js
+// some_transform_function.js
+module.exports = function (doc) {
   doc.total = doc.a + doc.b
   if (doc.total % 2 === 0) {
     return doc
@@ -59,10 +71,10 @@ module.exports = doc => {
 ### Async
 That function can also be async:
 ```js
-const getSomeExtraData = require('./path/to/get_some_extra_data')
+import { getSomeExtraData } from './path/to/get_some_extra_data.js'
 
 // some_async_transform_function.js
-module.exports = async doc => {
+export default async function (doc) {
   doc.total = doc.a + doc.b
   if (doc.total % 2 === 0) {
     doc.extraData = await getSomeExtraData(doc)
@@ -92,6 +104,26 @@ cat some_data.ndjson | ndjson-apply some_transform_function.js --filter
 Given a `function_collection.js` file like:
 ```js
 // function_collection.js
+export function foo (obj) {
+  obj.timestamp = Date.now()
+  return obj
+}
+
+export function bar (obj) {
+  obj.count += obj.count
+  return obj
+}
+```
+
+You can use those subfunction by passing their key as an additional argument
+```sh
+cat some_data.ndjson | ndjson-apply ./function_collection.js foo
+cat some_data.ndjson | ndjson-apply ./function_collection.js bar
+```
+
+This should also work with the CommonJS syntax:
+```js
+// function_collection.cjs
 module.exports = {
   foo: (obj) => {
     obj.timestamp = Date.now()
@@ -102,12 +134,6 @@ module.exports = {
     return obj
   }
 }
-```
-
-You can use those subfunction by passing their key as an additional argument
-```sh
-cat some_data.ndjson | ndjson-apply ./function_collection.js foo
-cat some_data.ndjson | ndjson-apply ./function_collection.js bar
 ```
 
 ### Pass additional arguments
