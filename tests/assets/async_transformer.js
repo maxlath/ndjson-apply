@@ -6,7 +6,7 @@ const getRemoteValue = async () => {
   return 100
 }
 
-module.exports = async (doc, bonus = '0') => {
+export default async (doc, bonus = '0') => {
   const remoteValue = await getRemoteValue()
   bonus = parseInt(bonus)
   doc.total = doc.a + doc.b + remoteValue + bonus

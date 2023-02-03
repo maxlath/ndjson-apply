@@ -1,7 +1,15 @@
 #!/usr/bin/env node
-const path = require('path')
-const { program } = require('commander')
-const { version, description } = require('../package.json')
+import { readFile } from 'fs/promises'
+import path from 'node:path'
+import { program } from 'commander'
+import split from 'split'
+import through from 'through'
+import handleErrors from '../lib/handle_errors.js'
+import lineTransformers from '../lib/line_transformers.js'
+import { isAsyncFunction } from '../lib/utils.js'
+
+const packageJson = await readFile(new URL('../package.json', import.meta.url))
+const { version, description } = JSON.parse(packageJson)
 
 program
 .description(description)
@@ -11,31 +19,31 @@ program
 .version(version)
 .addHelpText('after', `
 Examples:
-  # create a transform function
+  # Create a transform function in a CommonJS format
   echo '
-  module.exports = function (entry) {
+  export default function (entry) {
     entry.total = entry.countA + entry.countB
     return entry
   }
   ' > some_transform_function.js
 
-  # use it to transform ndjson entries
+  # Use it to transform ndjson entries
   cat some_data.ndjson | ndjson-apply some_transform_function.js > some_data_transformed.ndjson
 
-  # preview transformation changes
+  # Preview transformation changes
   cat some_data.ndjson | ndjson-apply some_transform_function.js --diff
 
-  # create a filter function
+  # Create a filter function
   echo '
   module.exports = function (entry) {
     return entry.total > 5
   }
   ' > some_filter_function.js
 
-  # filter entries
+  # Filter entries
   cat some_data_transformed.ndjson | ndjson-apply some_filter_function.js --filter > some_data_with_total_above_5.ndjson
 
-  # create a transform function that takes extra arguments from the command line
+  # Create a transform function that takes extra arguments from the command line
   echo '
   module.exports = function (entry, bonus) {
     entry.total = entry.countA + entry.countB + parseInt(bonus)
@@ -49,7 +57,7 @@ Examples:
 
 program.parse(process.argv)
 
-const [ fnModulePath, ...additionalArgs ] = program.args
+const [ fnModulePath, ...rawAdditionalArgs ] = program.args
 
 const { diff: showDiff, filter: filterOnly } = program.opts()
 
@@ -59,23 +67,25 @@ if (!fnModulePath) {
 }
 
 const resolvedPath = path.resolve(fnModulePath)
-let transformFn = require(resolvedPath)
+const exports = await import(resolvedPath)
 
-if (additionalArgs[0]) {
-  const key = additionalArgs[0]
-  if (typeof transformFn[key] === 'function') {
-    additionalArgs.shift()
-    transformFn = transformFn[key]
-  }
+let transformFn
+let additionalArgs = rawAdditionalArgs
+const possibleFunctionName = rawAdditionalArgs[0]
+if (possibleFunctionName && exports[possibleFunctionName] != null) {
+  additionalArgs = rawAdditionalArgs.slice(1)
+  transformFn = exports[possibleFunctionName]
+} else if (exports.default[possibleFunctionName] != null) {
+  additionalArgs = rawAdditionalArgs.slice(1)
+  transformFn = exports.default[possibleFunctionName]
+} else {
+  transformFn = exports.default
 }
 
-if (typeof transformFn !== 'function') throw new Error(`${resolvedPath} doesn't export a function`)
-
-const split = require('split')
-const through = require('through')
-const { isAsyncFunction } = require('../lib/utils')
-const lineTransformers = require('../lib/line_transformers')
-const handleErrors = require('../lib/handle_errors')
+if (typeof transformFn !== 'function') {
+  const context = { resolvedPath, exports: Object.keys(exports), rawAdditionalArgs, additionalArgs }
+  throw new Error(`transform function not found\n${JSON.stringify(context, null, 2)}`)
+}
 
 const transformer = isAsyncFunction(transformFn) ? lineTransformers.async : lineTransformers.sync
 
