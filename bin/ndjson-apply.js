@@ -7,6 +7,7 @@ import through from 'through'
 import handleErrors from '../lib/handle_errors.js'
 import lineTransformers from '../lib/line_transformers.js'
 import { isAsyncFunction } from '../lib/utils.js'
+import { helpText } from '../lib/help.js'
 
 const packageJson = await readFile(new URL('../package.json', import.meta.url))
 const { version, description } = JSON.parse(packageJson)
@@ -17,43 +18,7 @@ program
 .option('-d, --diff', 'Preview the changes between the input and the transformation output')
 .option('-f, --filter', 'Use the js function only to filter lines: lines returning `true` will be let through. No transformation will be applied.')
 .version(version)
-.addHelpText('after', `
-Examples:
-  # Create a transform function in a CommonJS format
-  echo '
-  export default function (entry) {
-    entry.total = entry.countA + entry.countB
-    return entry
-  }
-  ' > some_transform_function.js
-
-  # Use it to transform ndjson entries
-  cat some_data.ndjson | ndjson-apply some_transform_function.js > some_data_transformed.ndjson
-
-  # Preview transformation changes
-  cat some_data.ndjson | ndjson-apply some_transform_function.js --diff
-
-  # Create a filter function
-  echo '
-  module.exports = function (entry) {
-    return entry.total > 5
-  }
-  ' > some_filter_function.js
-
-  # Filter entries
-  cat some_data_transformed.ndjson | ndjson-apply some_filter_function.js --filter > some_data_with_total_above_5.ndjson
-
-  # Create a transform function that takes extra arguments from the command line
-  echo '
-  module.exports = function (entry, bonus) {
-    entry.total = entry.countA + entry.countB + parseInt(bonus)
-    return entry
-  }
-  ' > some_dynamic_transform_function.js
-
-  cat some_data.ndjson | ndjson-apply some_transform_function.js 500 > some_data_transformed_with_bonus_500.ndjson
-  cat some_data.ndjson | ndjson-apply some_transform_function.js 1000 > some_data_transformed_with_bonus_1000.ndjson
-`)
+.addHelpText('after', helpText)
 
 program.parse(process.argv)
 
