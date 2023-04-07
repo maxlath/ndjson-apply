@@ -148,3 +148,4 @@ cat some_data.ndjson | ndjson-apply ./function_collection.js foo 123
 ## See also
 * [jq](https://stedolan.github.io/jq/) is great to work with NDJSON: `cat entries_array.json | jq '.[]' -cr > entries.ndjson`
 * [ndjson-cli#map](https://github.com/mbostock/ndjson-cli#map)
+* [json-apply](https://github.com/maxlath/json-apply/)
