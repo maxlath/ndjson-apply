@@ -1,5 +1,5 @@
 # ndjson-apply
-Apply a JS function to a stream of newline-delimited JSON.
+A CLI tool to transform a stream of newline-delimited JSON by applying a JS function to each JSON object.
 
 Features:
 * take the JS function to apply from a file

@@ -2,7 +2,7 @@
   "name": "ndjson-apply",
   "version": "1.3.0",
   "type": "module",
-  "description": "Apply a JS function to a stream of newline-delimited JSON.",
+  "description": "A CLI tool to transform a stream of newline-delimited JSON by applying a JS function to each JSON object",
   "main": "bin/ndjson-apply.js",
   "bin": {
     "ndjson-apply": "bin/ndjson-apply.js"
