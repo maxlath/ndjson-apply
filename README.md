@@ -148,7 +148,10 @@ cat some_data.ndjson | ndjson-apply ./function_collection.js foo 123
 ### Typescript support
 To use `ndjson-apply` with `.ts` files, you can execute it with [`tsx`](https://github.com/privatenumber/tsx) as follow:
 ```sh
-tsx "$(ndjson-apply --get-executable-path)" ./some_transform_function.ts < ./tests/assets/sample.ndjson
+# Get a tsx executable
+npm install --global tsx
+# Use ndjson-apply-ts just like you would use ndjson-apply
+ndjson-apply-ts ./some_transform_function.ts < ./tests/assets/sample.ndjson
 ```
 
 ## See also

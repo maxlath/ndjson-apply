@@ -118,7 +118,7 @@ describe('apply', () => {
 
   describe('Typescript', () => {
     it('should accept a Typescript file', async () => {
-      const { stdout } = await exec('tsx ./bin/ndjson-apply.js ./tests/assets/ts_transformer.ts someTsAsyncTransformer 10 < ./tests/assets/sample.ndjson')
+      const { stdout } = await exec('./bin/ndjson-apply-ts.sh ./tests/assets/ts_transformer.ts someTsAsyncTransformer 10 < ./tests/assets/sample.ndjson')
       const data = stdout.trim().split('\n').map(line => JSON.parse(line))
       data.should.deepEqual([
         { a: 123, b: 456, total: 569 },

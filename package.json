@@ -5,7 +5,8 @@
   "description": "A CLI tool to transform a stream of newline-delimited JSON by applying a JS function to each JSON object",
   "main": "bin/ndjson-apply.js",
   "bin": {
-    "ndjson-apply": "bin/ndjson-apply.js"
+    "ndjson-apply": "bin/ndjson-apply.js",
+    "ndjson-apply-ts": "bin/ndjson-apply-ts.sh"
   },
   "files": [
     "bin",
