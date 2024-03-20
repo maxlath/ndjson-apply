@@ -16,7 +16,6 @@ Features:
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Install](#install)
 - [How To](#how-to)
   - [Basic](#basic)
@@ -25,6 +24,7 @@ Features:
   - [Filter mode](#filter-mode)
   - [Use sub-function](#use-sub-function)
   - [Pass additional arguments](#pass-additional-arguments)
+  - [Typescript support](#typescript-support)
 - [See also](#see-also)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -143,6 +143,12 @@ Any remaining argument will be passed to the function
 cat some_data.ndjson | ndjson-apply ./function.js 123
 # Pass '123' as argument to the exported sub-function foo
 cat some_data.ndjson | ndjson-apply ./function_collection.js foo 123
+```
+
+### Typescript support
+To use `ndjson-apply` with `.ts` files, you can execute it with [`tsx`](https://github.com/privatenumber/tsx) as follow:
+```sh
+tsx "$(ndjson-apply --get-executable-path)" ./some_transform_function.ts < ./tests/assets/sample.ndjson
 ```
 
 ## See also
