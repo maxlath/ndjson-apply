@@ -96,6 +96,23 @@ describe('apply', () => {
     ])
   })
 
+  describe('after hook', () => {
+    it('should call the after function', async () => {
+      const { stdout, stderr } = await exec('./bin/ndjson-apply.js ./tests/assets/reduce.js addScore --after outputSum < ./tests/assets/sample.ndjson')
+      stdout.trim().should.equal('912')
+    })
+
+    it('should not mess with additional arguments', async () => {
+      const { stdout, stderr } = await exec('./bin/ndjson-apply.js ./tests/assets/function_collection.js multiply 10 --after logOpsCount < ./tests/assets/sample.ndjson')
+      const data = stdout.trim().split('\n').map(line => JSON.parse(line))
+      data.should.deepEqual([
+        { a: 123, b: 456, total: 560880 },
+        { a: 789, b: 123, total: 970470 },
+      ])
+      stderr.trim().should.equal('ops=2')
+    })
+  })
+
   describe('CommonJS', () => {
     it('should accept a CommonJS file', async () => {
       const { stdout } = await exec('./bin/ndjson-apply.js ./tests/assets/sync_transformer.cjs 10 < ./tests/assets/sample.ndjson')

@@ -24,6 +24,7 @@ Features:
   - [Filter mode](#filter-mode)
   - [Use sub-function](#use-sub-function)
   - [Pass additional arguments](#pass-additional-arguments)
+  - [`after` hook](#after-hook)
   - [Typescript support](#typescript-support)
 - [See also](#see-also)
 
@@ -103,7 +104,6 @@ cat some_data.ndjson | ndjson-apply some_transform_function.js --filter
 ### Use sub-function
 Given a `function_collection.js` file like:
 ```js
-// function_collection.js
 export function foo (obj) {
   obj.timestamp = Date.now()
   return obj
@@ -143,6 +143,31 @@ Any remaining argument will be passed to the function
 cat some_data.ndjson | ndjson-apply ./function.js 123
 # Pass '123' as argument to the exported sub-function foo
 cat some_data.ndjson | ndjson-apply ./function_collection.js foo 123
+```
+
+### `after` hook
+
+This allows, for instance, to implement [`reduce` functions](https://en.wikipedia.org/wiki/Fold_(higher-order_function)), or any kind of side effects that needs to be performed once all lines have been processed.
+
+Given a `aggregate.js` file like:
+```js
+let sum = 0
+
+export function addA (doc) {
+  sum += doc.a
+}
+
+export function outputSum () {
+  return sum
+}
+```
+
+```js
+echo '
+{ "a": 1, "b": 8 }
+{ "a": 3, "b": 6 }
+' | ndjson-apply ./aggregate.js addA --after outputSum
+// => 4
 ```
 
 ### Typescript support
