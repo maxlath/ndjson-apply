@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 1.5.0 - 2024-12-20
+* Add [`--after` option](https://github.com/maxlath/ndjson-apply#after-hook)
+
 ## 1.4.0 - 2024-03-20
 * Add support for [TS modules](https://github.com/maxlath/ndjson-apply#typescript-support)
 
