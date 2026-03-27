@@ -48,10 +48,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maxlath/ndjson-apply.git"
+    "url": "https://codeberg.org/maxlath/ndjson-apply"
   },
   "bugs": {
-    "url": "https://github.com/maxlath/ndjson-apply/issues"
+    "url": "https://codeberg.org/maxlath/ndjson-apply/issues"
   },
-  "homepage": "https://github.com/maxlath/ndjson-apply#readme"
+  "homepage": "https://codeberg.org/maxlath/ndjson-apply#readme"
 }
